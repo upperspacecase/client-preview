@@ -74,14 +74,6 @@ html[data-theme="dark"] .cp-slot {
   background: rgba(74, 222, 128, 0.08) !important;
 }
 
-/* The "Try it!" arrow tracks the widget — fades when widget is hidden */
-.cp-try-arrow {
-  transition: opacity 200ms ease;
-}
-html[data-cp-visible="0"] .cp-try-arrow {
-  opacity: 0;
-}
-
 /* Hand-drawn box */
 .scribble-box {
   position: relative;
