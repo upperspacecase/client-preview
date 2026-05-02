@@ -12,6 +12,7 @@ import {
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 
 export type Option = { value: string; label: string };
 
@@ -32,11 +33,13 @@ export function ClientPreview({
   children,
   storageKey = "cp:v1",
   defaultVisibility = "auto",
+  target = null,
 }: {
   controls?: Control[];
   children: ReactNode;
   storageKey?: string;
   defaultVisibility?: "auto" | "show" | "hide";
+  target?: HTMLElement | null;
 }) {
   const [values, setValues] = useState<Record<string, string>>(() => {
     const init: Record<string, string> = {};
@@ -137,17 +140,17 @@ export function ClientPreview({
 
   const ctxValue = useMemo(() => values, [values]);
 
-  return (
-    <Ctx.Provider value={ctxValue}>
-      {children}
-      {hydrated && visible && (
-        <div
-          onPointerDown={onPointerDown}
-          style={{
-            ...panel,
-            transform: `translate(${pos.x}px, ${pos.y}px)`,
-          }}
-        >
+  const widget = hydrated && visible && (
+    <div
+      onPointerDown={onPointerDown}
+      style={{
+        ...panel,
+        position: target ? "absolute" : "fixed",
+        top: target ? 16 : 16,
+        right: target ? 16 : 16,
+        transform: `translate(${pos.x}px, ${pos.y}px)`,
+      }}
+    >
           <div style={head}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
               <span style={{ color: "#9ca3af", fontSize: 13, lineHeight: 1 }}>⋮⋮</span>
@@ -199,21 +202,23 @@ export function ClientPreview({
               </div>
             </div>
           ))}
-          <div style={footer}>
-            Previewing
-            <br />
-            {process.env.NODE_ENV === "production" ? "production (?preview=1)" : "dev mode"}
-          </div>
-        </div>
-      )}
+      <div style={footer}>
+        Previewing
+        <br />
+        {process.env.NODE_ENV === "production" ? "production (?preview=1)" : "dev mode"}
+      </div>
+    </div>
+  );
+
+  return (
+    <Ctx.Provider value={ctxValue}>
+      {children}
+      {widget && (target ? createPortal(widget, target) : widget)}
     </Ctx.Provider>
   );
 }
 
 const panel: CSSProperties = {
-  position: "fixed",
-  top: 134,
-  right: 48,
   zIndex: 99999,
   width: 232,
   padding: 14,

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ScribbleUnderline, ScribbleBox, Arrow } from "@/components/scribble";
 import {
   IconBolt,
@@ -33,18 +34,20 @@ const controls: Control[] = [
 ];
 
 export default function Home() {
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
   return (
     <ClientPreview
       controls={controls}
       storageKey="cp-landing:v1"
       defaultVisibility="show"
+      target={slot}
     >
-      <Landing />
+      <Landing onSlotMount={setSlot} />
     </ClientPreview>
   );
 }
 
-function Landing() {
+function Landing({ onSlotMount }: { onSlotMount: (el: HTMLElement | null) => void }) {
   const headline = useVariant("Headline");
 
   return (
@@ -69,35 +72,38 @@ function Landing() {
         </header>
 
         {/* Hero */}
-        <section className="mt-14 md:mt-20">
-          <Headline variant={headline} />
-          <p className="mt-8 text-[20px] md:text-[22px] max-w-[640px] leading-snug">
-            Drop a 5KB widget on the{" "}
-            <ScribbleUnderline thin>live site</ScribbleUnderline> and let
-            them toggle the options themselves.
-          </p>
-          <div className="mt-12 flex items-center gap-10 flex-wrap">
-            <a
-              href="https://github.com/upperspacecase/client-preview"
-              className="inline-flex items-center gap-3 bg-[var(--color-yellow)] text-[#15151c] px-7 py-4 marker text-[22px] uppercase tracking-wide shadow-[3px_3px_0_var(--color-ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0_var(--color-ink)] transition-all"
-            >
-              Get on GitHub
-              <Arrow />
-            </a>
+        <section className="mt-14 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-7">
+            <Headline variant={headline} />
+            <p className="mt-8 text-[20px] md:text-[22px] max-w-[640px] leading-snug">
+              Drop a 5KB widget on the{" "}
+              <ScribbleUnderline thin>live site</ScribbleUnderline> and let
+              them toggle the options themselves.
+            </p>
+            <div className="mt-12 flex items-center gap-10 flex-wrap">
+              <a
+                href="https://github.com/upperspacecase/client-preview"
+                className="inline-flex items-center gap-3 bg-[var(--color-yellow)] text-[#15151c] px-7 py-4 marker text-[22px] uppercase tracking-wide shadow-[3px_3px_0_var(--color-ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0_var(--color-ink)] transition-all"
+              >
+                Get on GitHub
+                <Arrow />
+              </a>
+            </div>
+            <p className="mt-10 marker uppercase text-[20px] tracking-wide opacity-80">
+              <span>
+                That widget? Real. Drag it, toggle it, or hit{" "}
+                <kbd className="inline-block border-2 border-current rounded px-2 py-0.5 marker text-[16px] tracking-wide align-middle">
+                  Esc
+                </kbd>{" "}
+                to hide.
+              </span>
+            </p>
           </div>
-          <p className="mt-10 marker uppercase text-[20px] tracking-wide opacity-80">
-            <span>
-              That widget? Real. Drag it, toggle it, or hit{" "}
-              <kbd className="inline-block border-2 border-current rounded px-2 py-0.5 marker text-[16px] tracking-wide align-middle">
-                Esc
-              </kbd>{" "}
-              to hide.
-            </span>
-          </p>
-        </section>
 
-        <WidgetSlot />
-        <TryItArrow />
+          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+            <WidgetSlot onMount={onSlotMount} />
+          </div>
+        </section>
 
         {/* Divider */}
         <div className="mt-20 md:mt-28 border-t-2 border-[var(--color-ink)]" />
@@ -189,9 +195,11 @@ function Landing() {
 }
 
 function Headline({ variant }: { variant: string | undefined }) {
+  const cls =
+    "display text-[56px] md:text-[76px] lg:text-[88px] xl:text-[100px]";
   if (variant === "screenshots") {
     return (
-      <h1 className="display text-[64px] md:text-[88px] lg:text-[104px]">
+      <h1 className={cls}>
         Stop emailing
         <br />
         <ScribbleUnderline>screenshots</ScribbleUnderline>.
@@ -200,7 +208,7 @@ function Headline({ variant }: { variant: string | undefined }) {
   }
   if (variant === "staging") {
     return (
-      <h1 className="display text-[64px] md:text-[88px] lg:text-[104px]">
+      <h1 className={cls}>
         Stop deploying
         <br />
         <ScribbleUnderline>staging URLs</ScribbleUnderline>.
@@ -208,7 +216,7 @@ function Headline({ variant }: { variant: string | undefined }) {
     );
   }
   return (
-    <h1 className="display text-[64px] md:text-[88px] lg:text-[104px]">
+    <h1 className={cls}>
       Stop <ScribbleUnderline>Looming</ScribbleUnderline>
       <br />
       your clients.
@@ -216,34 +224,18 @@ function Headline({ variant }: { variant: string | undefined }) {
   );
 }
 
-function WidgetSlot() {
-  return <div className="cp-slot" aria-hidden />;
-}
-
-function TryItArrow() {
+function WidgetSlot({
+  onMount,
+}: {
+  onMount: (el: HTMLElement | null) => void;
+}) {
   return (
-    <div className="cp-try-arrow" aria-hidden>
-      <svg width="240" height="180" viewBox="0 0 240 180" fill="none">
-        <path
-          d="M30 160 C 80 150, 110 110, 130 80 S 200 35, 225 18"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          fill="none"
-        />
-        <path
-          d="M225 18 L 208 22 M 225 18 L 216 36"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          fill="none"
-        />
-      </svg>
-      <span
-        className="marker uppercase text-[28px] tracking-wide absolute"
-        style={{ left: 0, top: 150, color: "var(--color-violet)" }}
-      >
-        Try it!
+    <div
+      ref={onMount}
+      className="cp-slot relative w-full max-w-[360px] h-[480px] rounded-3xl border-[2.5px] border-dashed border-emerald-600 bg-emerald-600/5 grid place-items-center"
+    >
+      <span className="marker uppercase text-[44px] tracking-wide text-emerald-700/80">
+        Nice one.
       </span>
     </div>
   );
