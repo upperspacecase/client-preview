@@ -69,21 +69,21 @@ html[data-theme="dark"] {
   pointer-events: none;
 }
 
-/* Ghost slot for the live widget — slightly larger so the dashed
-   border peeks out as a frame around the widget in its home position. */
+/* Ghost slot for the live widget — frames where the widget lives so
+   it's clear the panel can be dragged around. */
 .cp-slot {
   position: fixed;
-  top: 88px;
-  right: 8px;
-  width: 248px;
-  height: 300px;
-  border: 2px dashed #16a34a;
-  border-radius: 18px;
+  top: 110px;
+  right: 24px;
+  width: 280px;
+  height: 380px;
+  border: 2.5px dashed #16a34a;
+  border-radius: 20px;
   background: rgba(22, 163, 74, 0.06);
   pointer-events: none;
   z-index: 99998;
   transition: opacity 200ms ease;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 html[data-theme="dark"] .cp-slot {
@@ -114,8 +114,8 @@ html[data-theme="dark"] .cp-slot-label {
 /* Curly arrow toward the widget */
 .cp-try-arrow {
   position: fixed;
-  top: 320px;
-  right: 280px;
+  top: 410px;
+  right: 320px;
   z-index: 99997;
   pointer-events: none;
   color: var(--color-violet);

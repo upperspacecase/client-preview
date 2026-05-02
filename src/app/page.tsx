@@ -223,30 +223,25 @@ function WidgetSlot() {
 function TryItArrow() {
   return (
     <div className="cp-try-arrow" aria-hidden>
-      <svg
-        width="200"
-        height="160"
-        viewBox="0 0 200 160"
-        fill="none"
-      >
+      <svg width="240" height="180" viewBox="0 0 240 180" fill="none">
         <path
-          d="M20 140 C 50 130, 60 90, 95 75 S 160 50, 185 25"
+          d="M30 160 C 80 150, 110 110, 130 80 S 200 35, 225 18"
           stroke="currentColor"
-          strokeWidth="2.8"
+          strokeWidth="3"
           strokeLinecap="round"
           fill="none"
         />
         <path
-          d="M185 25 L 170 28 M 185 25 L 178 40"
+          d="M225 18 L 208 22 M 225 18 L 216 36"
           stroke="currentColor"
-          strokeWidth="2.8"
+          strokeWidth="3"
           strokeLinecap="round"
           fill="none"
         />
       </svg>
       <span
-        className="marker uppercase text-[24px] tracking-wide absolute"
-        style={{ left: 0, top: 132, color: "var(--color-violet)" }}
+        className="marker uppercase text-[28px] tracking-wide absolute"
+        style={{ left: 0, top: 150, color: "var(--color-violet)" }}
       >
         Try it!
       </span>

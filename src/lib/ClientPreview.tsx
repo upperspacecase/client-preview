@@ -212,8 +212,8 @@ export function ClientPreview({
 
 const panel: CSSProperties = {
   position: "fixed",
-  top: 96,
-  right: 16,
+  top: 134,
+  right: 48,
   zIndex: 99999,
   width: 232,
   padding: 14,
