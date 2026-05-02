@@ -31,10 +31,12 @@ export function ClientPreview({
   controls = [],
   children,
   storageKey = "cp:v1",
+  defaultVisibility = "auto",
 }: {
   controls?: Control[];
   children: ReactNode;
   storageKey?: string;
+  defaultVisibility?: "auto" | "show" | "hide";
 }) {
   const [values, setValues] = useState<Record<string, string>>(() => {
     const init: Record<string, string> = {};
@@ -57,9 +59,11 @@ export function ClientPreview({
     const flag = params.get("preview");
     if (flag === "0") setVisible(false);
     else if (flag === "1") setVisible(true);
+    else if (defaultVisibility === "show") setVisible(true);
+    else if (defaultVisibility === "hide") setVisible(false);
     else setVisible(process.env.NODE_ENV !== "production");
     setHydrated(true);
-  }, [storageKey]);
+  }, [storageKey, defaultVisibility]);
 
   useEffect(() => {
     if (!hydrated) return;

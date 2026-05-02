@@ -1,7 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { ScribbleUnderline, ScribbleBox, Squiggle, Arrow } from "@/components/scribble";
-import { LandingWidget } from "@/components/LandingWidget";
-import { BrowserMock } from "@/components/BrowserMock";
+import { ScribbleUnderline, ScribbleBox, Arrow } from "@/components/scribble";
 import {
   IconBolt,
   IconSwap,
@@ -10,8 +10,44 @@ import {
   IconCode,
   IconHeart,
 } from "@/components/icons";
+import { ClientPreview, useVariant, type Control } from "@/lib/ClientPreview";
+
+const controls: Control[] = [
+  {
+    label: "Headline",
+    options: [
+      { value: "looming", label: "Looming" },
+      { value: "screenshots", label: "Screenshots" },
+      { value: "staging", label: "Staging URLs" },
+    ],
+  },
+  {
+    label: "Theme",
+    options: [
+      { value: "light", label: "Light" },
+      { value: "dark", label: "Dark" },
+    ],
+    apply: (v) => {
+      document.documentElement.dataset.theme = v;
+    },
+  },
+];
 
 export default function Home() {
+  return (
+    <ClientPreview
+      controls={controls}
+      storageKey="cp-landing:v1"
+      defaultVisibility="show"
+    >
+      <Landing />
+    </ClientPreview>
+  );
+}
+
+function Landing() {
+  const headline = useVariant("Headline");
+
   return (
     <main className="min-h-screen px-6 md:px-12 lg:px-20 py-8 md:py-12">
       <div className="mx-auto max-w-[1280px]">
@@ -34,47 +70,41 @@ export default function Home() {
         </header>
 
         {/* Hero */}
-        <section className="mt-14 md:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-7">
-            <h1 className="display text-[64px] md:text-[88px] lg:text-[104px]">
-              Stop{" "}
-              <ScribbleUnderline>Looming</ScribbleUnderline>
-              <br />
-              your clients.
-            </h1>
-            <p className="mt-8 text-[20px] md:text-[22px] max-w-[540px] leading-snug">
-              Drop a 5KB widget on the{" "}
-              <ScribbleUnderline thin>live site</ScribbleUnderline> and let
-              them toggle the options themselves.
-            </p>
-            <div className="mt-12 flex items-center gap-10 flex-wrap">
-              <Link
-                href="/demo"
-                className="inline-flex items-center gap-3 bg-[var(--color-yellow)] px-7 py-4 marker text-[22px] uppercase tracking-wide shadow-[3px_3px_0_var(--color-ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0_var(--color-ink)] transition-all"
-              >
-                Try the demo
-                <Arrow />
-              </Link>
-              <a
-                href="https://github.com/upperspacecase/client-preview"
-                className="marker text-[22px] uppercase tracking-wide pb-1 border-b-2 border-[var(--color-ink)] hover:text-[var(--color-violet-deep)] transition-colors"
-              >
-                View on GitHub
-              </a>
-            </div>
+        <section className="mt-14 md:mt-20">
+          <Headline variant={headline} />
+          <p className="mt-8 text-[20px] md:text-[22px] max-w-[640px] leading-snug">
+            Drop a 5KB widget on the{" "}
+            <ScribbleUnderline thin>live site</ScribbleUnderline> and let
+            them toggle the options themselves.
+          </p>
+          <div className="mt-12 flex items-center gap-10 flex-wrap">
+            <a
+              href="https://github.com/upperspacecase/client-preview"
+              className="inline-flex items-center gap-3 bg-[var(--color-yellow)] text-[#15151c] px-7 py-4 marker text-[22px] uppercase tracking-wide shadow-[3px_3px_0_var(--color-ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0_var(--color-ink)] transition-all"
+            >
+              Get on GitHub
+              <Arrow />
+            </a>
+            <Link
+              href="/demo"
+              className="marker text-[22px] uppercase tracking-wide pb-1 border-b-2 border-[var(--color-ink)] hover:opacity-70 transition-opacity"
+            >
+              See another demo
+            </Link>
           </div>
-
-          {/* Browser + widget */}
-          <div className="lg:col-span-5 relative mt-2">
-            <BrowserMock />
-            <div className="absolute -right-2 top-12 md:-right-6 md:top-10">
-              <LandingWidget />
-            </div>
-          </div>
+          <p className="mt-10 marker uppercase text-[20px] tracking-wide opacity-80">
+            <ArrowUpRight />
+            <span className="ml-2">
+              That widget? Real.{" "}
+              <ScribbleUnderline thin color="var(--color-violet)">
+                Go on, toggle it.
+              </ScribbleUnderline>
+            </span>
+          </p>
         </section>
 
         {/* Divider */}
-        <div className="mt-16 md:mt-20 border-t-2 border-[var(--color-ink)]" />
+        <div className="mt-20 md:mt-28 border-t-2 border-[var(--color-ink)]" />
 
         {/* Features */}
         <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10 py-12">
@@ -101,7 +131,7 @@ export default function Home() {
               "locally. Gate in prod",
               <>
                 with{" "}
-                <code className="font-mono text-[15px] bg-[var(--color-yellow-soft)] px-1.5 py-0.5 rounded">
+                <code className="font-mono text-[15px] bg-[var(--color-yellow-soft)] text-[var(--color-ink)] px-1.5 py-0.5 rounded">
                   ?preview=1
                 </code>
                 .
@@ -115,7 +145,7 @@ export default function Home() {
               "Apply callback",
               <>
                 or{" "}
-                <code className="font-mono text-[15px] bg-[var(--color-lavender-soft)] px-1.5 py-0.5 rounded">
+                <code className="font-mono text-[15px] bg-[var(--color-lavender-soft)] text-[var(--color-violet-deep)] px-1.5 py-0.5 rounded">
                   useVariant()
                 </code>
               </>,
@@ -159,6 +189,53 @@ export default function Home() {
         </footer>
       </div>
     </main>
+  );
+}
+
+function Headline({ variant }: { variant: string | undefined }) {
+  if (variant === "screenshots") {
+    return (
+      <h1 className="display text-[64px] md:text-[88px] lg:text-[104px]">
+        Stop emailing
+        <br />
+        <ScribbleUnderline>screenshots</ScribbleUnderline>.
+      </h1>
+    );
+  }
+  if (variant === "staging") {
+    return (
+      <h1 className="display text-[64px] md:text-[88px] lg:text-[104px]">
+        Stop deploying
+        <br />
+        <ScribbleUnderline>staging URLs</ScribbleUnderline>.
+      </h1>
+    );
+  }
+  return (
+    <h1 className="display text-[64px] md:text-[88px] lg:text-[104px]">
+      Stop <ScribbleUnderline>Looming</ScribbleUnderline>
+      <br />
+      your clients.
+    </h1>
+  );
+}
+
+function ArrowUpRight() {
+  return (
+    <svg
+      viewBox="0 0 30 30"
+      className="inline-block w-6 h-6 align-middle"
+      aria-hidden
+    >
+      <path
+        d="M5 25 L25 5 M25 5 H12 M25 5 V18"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
   );
 }
 

@@ -22,6 +22,19 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+html[data-theme="dark"] {
+  --color-paper: #15151c;
+  --color-ink: #f6f1e3;
+  --color-yellow: #fcc91a;
+  --color-yellow-soft: #4a3a04;
+  --color-lavender: #2c225a;
+  --color-lavender-soft: #2c225a;
+  --color-violet: #b9a9ff;
+  --color-violet-deep: #d6cbff;
+  --color-rule: #f6f1e3;
 }
 
 * {
