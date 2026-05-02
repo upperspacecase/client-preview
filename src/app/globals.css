@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f6f1e3;
+  --color-ink: #15151a;
+  --color-yellow: #fcc91a;
+  --color-yellow-soft: #ffe58a;
+  --color-lavender: #ddd9ff;
+  --color-lavender-soft: #ede9fe;
+  --color-violet: #5b3fd6;
+  --color-violet-deep: #4a30b8;
+  --color-rule: #1a1a20;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-marker: "Caveat Brush", "Patrick Hand", "Permanent Marker", cursive;
+}
+
+html,
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.marker {
+  font-family: var(--font-marker);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+}
+
+/* Hand-drawn underline */
+.scribble-underline {
+  position: relative;
+  display: inline-block;
+}
+.scribble-underline > svg {
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -0.18em;
+  width: 104%;
+  height: 0.45em;
+  pointer-events: none;
+}
+
+/* Hand-drawn box */
+.scribble-box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.scribble-box > svg {
+  position: absolute;
+  inset: -6px -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 12px);
+  pointer-events: none;
+}
