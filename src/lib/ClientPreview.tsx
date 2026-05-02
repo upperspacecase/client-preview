@@ -146,9 +146,12 @@ export function ClientPreview({
       style={{
         ...panel,
         position: target ? "absolute" : "fixed",
-        top: target ? 16 : 16,
-        right: target ? 16 : 16,
-        transform: `translate(${pos.x}px, ${pos.y}px)`,
+        ...(target
+          ? { top: "50%", left: "50%" }
+          : { top: 16, right: 16 }),
+        transform: target
+          ? `translate(-50%, -50%) translate(${pos.x}px, ${pos.y}px)`
+          : `translate(${pos.x}px, ${pos.y}px)`,
       }}
     >
           <div style={head}>

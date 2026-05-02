@@ -72,7 +72,7 @@ function Landing({ onSlotMount }: { onSlotMount: (el: HTMLElement | null) => voi
         </header>
 
         {/* Hero */}
-        <section className="mt-14 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <section className="relative mt-14 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7">
             <Headline variant={headline} />
             <p className="mt-8 text-[20px] md:text-[22px] max-w-[640px] leading-snug">
@@ -103,6 +103,8 @@ function Landing({ onSlotMount }: { onSlotMount: (el: HTMLElement | null) => voi
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <WidgetSlot onMount={onSlotMount} />
           </div>
+
+          <TryItArrow />
         </section>
 
         {/* Divider */}
@@ -236,6 +238,43 @@ function WidgetSlot({
     >
       <span className="marker uppercase text-[44px] tracking-wide text-emerald-700/80">
         Nice one.
+      </span>
+    </div>
+  );
+}
+
+function TryItArrow() {
+  return (
+    <div
+      aria-hidden
+      className="cp-try-arrow hidden lg:block absolute pointer-events-none"
+      style={{
+        bottom: -40,
+        left: "calc(58.333% - 40px)",
+        color: "var(--color-violet)",
+      }}
+    >
+      <svg width="240" height="180" viewBox="0 0 240 180" fill="none">
+        <path
+          d="M30 160 C 70 140, 90 100, 130 70 S 200 30, 222 18"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          fill="none"
+        />
+        <path
+          d="M222 18 L 206 22 M 222 18 L 214 36"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          fill="none"
+        />
+      </svg>
+      <span
+        className="marker uppercase text-[28px] tracking-wide absolute"
+        style={{ left: 0, top: 150 }}
+      >
+        Try it!
       </span>
     </div>
   );
