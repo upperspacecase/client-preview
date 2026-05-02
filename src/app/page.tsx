@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { ScribbleUnderline, ScribbleBox, Arrow } from "@/components/scribble";
 import {
   IconBolt,
@@ -85,23 +84,20 @@ function Landing() {
               Get on GitHub
               <Arrow />
             </a>
-            <Link
-              href="/demo"
-              className="marker text-[22px] uppercase tracking-wide pb-1 border-b-2 border-[var(--color-ink)] hover:opacity-70 transition-opacity"
-            >
-              See another demo
-            </Link>
           </div>
           <p className="mt-10 marker uppercase text-[20px] tracking-wide opacity-80">
-            <ArrowUpRight />
-            <span className="ml-2">
-              That widget? Real.{" "}
-              <ScribbleUnderline thin color="var(--color-violet)">
-                Go on, toggle it.
-              </ScribbleUnderline>
+            <span>
+              That widget? Real. Drag it, toggle it, or hit{" "}
+              <kbd className="inline-block border-2 border-current rounded px-2 py-0.5 marker text-[16px] tracking-wide align-middle">
+                Esc
+              </kbd>{" "}
+              to hide.
             </span>
           </p>
         </section>
+
+        <WidgetSlot />
+        <TryItArrow />
 
         {/* Divider */}
         <div className="mt-20 md:mt-28 border-t-2 border-[var(--color-ink)]" />
@@ -220,22 +216,41 @@ function Headline({ variant }: { variant: string | undefined }) {
   );
 }
 
-function ArrowUpRight() {
+function WidgetSlot() {
+  return <div className="cp-slot" aria-hidden />;
+}
+
+function TryItArrow() {
   return (
-    <svg
-      viewBox="0 0 30 30"
-      className="inline-block w-6 h-6 align-middle"
-      aria-hidden
-    >
-      <path
-        d="M5 25 L25 5 M25 5 H12 M25 5 V18"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+    <div className="cp-try-arrow" aria-hidden>
+      <svg
+        width="200"
+        height="160"
+        viewBox="0 0 200 160"
         fill="none"
-      />
-    </svg>
+      >
+        <path
+          d="M20 140 C 50 130, 60 90, 95 75 S 160 50, 185 25"
+          stroke="currentColor"
+          strokeWidth="2.8"
+          strokeLinecap="round"
+          fill="none"
+        />
+        <path
+          d="M185 25 L 170 28 M 185 25 L 178 40"
+          stroke="currentColor"
+          strokeWidth="2.8"
+          strokeLinecap="round"
+          fill="none"
+        />
+      </svg>
+      <span
+        className="marker uppercase text-[24px] tracking-wide absolute"
+        style={{ left: 0, top: 132, color: "var(--color-violet)" }}
+      >
+        Try it!
+      </span>
+    </div>
   );
 }
 

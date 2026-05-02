@@ -74,6 +74,11 @@ export function ClientPreview({
 
   useEffect(() => {
     if (!hydrated) return;
+    document.documentElement.dataset.cpVisible = visible ? "1" : "0";
+  }, [hydrated, visible]);
+
+  useEffect(() => {
+    if (!hydrated) return;
     try {
       localStorage.setItem(storageKey + ":pos", JSON.stringify(pos));
     } catch {}
@@ -207,7 +212,7 @@ export function ClientPreview({
 
 const panel: CSSProperties = {
   position: "fixed",
-  top: 16,
+  top: 96,
   right: 16,
   zIndex: 99999,
   width: 232,

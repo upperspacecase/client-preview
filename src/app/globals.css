@@ -69,6 +69,66 @@ html[data-theme="dark"] {
   pointer-events: none;
 }
 
+/* Ghost slot for the live widget — slightly larger so the dashed
+   border peeks out as a frame around the widget in its home position. */
+.cp-slot {
+  position: fixed;
+  top: 88px;
+  right: 8px;
+  width: 248px;
+  height: 300px;
+  border: 2px dashed #16a34a;
+  border-radius: 18px;
+  background: rgba(22, 163, 74, 0.06);
+  pointer-events: none;
+  z-index: 99998;
+  transition: opacity 200ms ease;
+  opacity: 0.9;
+}
+
+html[data-theme="dark"] .cp-slot {
+  border-color: #4ade80;
+  background: rgba(74, 222, 128, 0.08);
+}
+
+html[data-cp-visible="0"] .cp-slot,
+html[data-cp-visible="0"] .cp-try-arrow {
+  opacity: 0;
+}
+
+.cp-slot-label {
+  position: absolute;
+  bottom: -22px;
+  right: 0;
+  font-family: var(--font-marker);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #16a34a;
+}
+
+html[data-theme="dark"] .cp-slot-label {
+  color: #4ade80;
+}
+
+/* Curly arrow toward the widget */
+.cp-try-arrow {
+  position: fixed;
+  top: 320px;
+  right: 280px;
+  z-index: 99997;
+  pointer-events: none;
+  color: var(--color-violet);
+  transition: opacity 200ms ease;
+}
+
+@media (max-width: 1024px) {
+  .cp-slot,
+  .cp-try-arrow {
+    display: none;
+  }
+}
+
 /* Hand-drawn box */
 .scribble-box {
   position: relative;
